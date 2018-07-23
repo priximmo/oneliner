@@ -1,0 +1,10 @@
+tasks: 
+  - name: Liste les binaires oracle
+    find:
+      paths: /usr/lib/oracle/12.2/client64/bin/
+    register: result
+  - name: Création des liens symboliques
+    file:
+      src: "{{ item.path }}"
+      dest: /usr/bin/{{ item.path | basename }}
+      state: link with_items: "{{ result.files }}" 
