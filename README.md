@@ -6,3 +6,7 @@ A compilation for short code with some langage :
 - awk
 - perl
 - bash
+- oracle
+- mysql
+- ansible
+- docker
