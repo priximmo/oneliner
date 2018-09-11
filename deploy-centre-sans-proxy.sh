@@ -79,3 +79,27 @@ if [ "$1" == "--infos" ]; then
 	done
 
 fi
+
+if [ "$1" == "--start" ];then
+	
+	sudo /etc/init.d/docker start
+
+	
+        for i in $(docker ps -a --format "{{ .Names }}" |grep "servparc" );do
+                echo "     --Démarrage de ${i}..."
+                docker start $i
+                echo "     --Démarrage de sshd sur ${i}"
+                docker exec -ti ${i} /bin/bash -c "sudo service ssh start"
+        done
+echo ""
+echo "#### Récap des infos ####"
+echo ""
+
+
+	for i in $(docker ps -a --format "{{ .Names }}" |grep "servparc" );do
+                infos_conteneur=$(docker inspect -f '   => {{.Name}} - {{.NetworkSettings.IPAddress }}' ${i})
+                echo "${infos_conteneur} - Utilisteur : ${USERNAME} / mdp:password"
+        done
+
+
+fi
