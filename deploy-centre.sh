@@ -29,8 +29,6 @@ Aide :
 
 	--start : démarre tous les conteneurs (start) et le service docker si celui-ci n'est pas démarré.
 
-	--create-mix : créer à la fois des conteneurs debian et des conteneurs centos (arg1 = debian et arg2 = centos)
-
 	"
 fi
 # si besoin de configuration du proxy centrale
@@ -48,16 +46,6 @@ if [ "$1" == "--proxy" ];then
 
 fi
 
-
-if [ "$1" == "--create-mix" ];then
-	echo ""
-	echo "#### Création des Debian..."
-	./deploy-centre-v2.sh --create-debian $2 
-	echo ""
-	echo "#### Création des Centos..."
-	./deploy-centre-v2.sh --create-centos $3
-
-fi
 
 
 # création de debian seules
