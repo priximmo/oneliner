@@ -33,7 +33,7 @@ Aide :
 
 	"
 fi
-# si besoin de configuration de proxy
+# si besoin de configuration du proxy centrale
 if [ "$1" == "--proxy" ];then
         
         if [ -f "/etc/systemd/system/docker.service.d/http-proxy.conf" ];then
@@ -42,7 +42,7 @@ if [ "$1" == "--proxy" ];then
         else 
                 mkdir /etc/systemd/system/docker.service.d/
                 echo "[Service]" | sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf
-                echo "Environment=\"HTTP_PROXY=<adresse_proxy>\"" | sudo tee --append /etc/systemd/system/docker.service.d/http-proxy.conf
+                echo "Environment=\"HTTP_PROXY=http://pcs.ritac.i2:3128\"" | sudo tee --append /etc/systemd/system/docker.service.d/http-proxy.conf
                 sudo service docker restart
         fi 
 
@@ -52,10 +52,10 @@ fi
 if [ "$1" == "--create-mix" ];then
 	echo ""
 	echo "#### Création des Debian..."
-	./deploy-centre-v2.sh --create-debian $2 --null
+	./deploy-centre-v2.sh --create-debian $2 
 	echo ""
 	echo "#### Création des Centos..."
-	./deploy-centre-v2.sh --create-centos $3 --null
+	./deploy-centre-v2.sh --create-centos $3
 
 fi
 
@@ -162,7 +162,6 @@ fi
 
 # récap des infos
 
-if [ "$3" != "--null" ];then
 
 
 echo ""
@@ -173,4 +172,3 @@ echo ""
 		infos_conteneur=$(docker inspect -f '   => {{.Name}} - {{.NetworkSettings.IPAddress }}' ${i})
 		echo "${infos_conteneur} - Utilisteur : ${USERNAME} / mdp:password"
 	done
-fi
