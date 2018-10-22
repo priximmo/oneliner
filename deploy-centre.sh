@@ -56,7 +56,7 @@ if [ "$1" == "--create-debian" ];then
 	
 	# rapatriement de l'image si elle n'exsiste pas
 	echo "Installation de l'image "
-	docker pull priximmo/stretch-systemd-ssh:v3.1
+	docker pull priximmo/stretch-systemd-ssh:v3.2
 
 	# création des conteneurs
 	echo "Création : ${nbserv} conteneurs..."
@@ -71,7 +71,7 @@ if [ "$1" == "--create-debian" ];then
 	for i in $( seq $id_min $id_max );do
 		echo ""
 		echo "=> conteneur ${USERNAME}-deb-vmparc${i}"
-    docker run -tid -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name ${USERNAME}-deb-vmparc${i} priximmo/stretch-systemd-ssh:v3.1
+    docker run -tid --publish-all=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name ${USERNAME}-deb-vmparc${i} -h ${USERNAME}-deb-vmparc${i} priximmo/stretch-systemd-ssh:v3.2
 		echo "    => création de l'utilisateur ${USERNAME}"
 		docker exec -ti ${USERNAME}-deb-vmparc${i} /bin/bash -c "useradd -m -p sa3tHJ3/KuYvI ${USERNAME}"
 		echo "Installation de votre clé publique ${HOME}/.ssh/id_rsa.pub"
@@ -107,7 +107,7 @@ if [ "$1" == "--create-centos" ];then
 	for i in $( seq $id_min $id_max );do
 		echo ""
 		echo "=> conteneur ${USERNAME}-centos-vmparc${i}"
-    docker run -tid -v /sys/fs/cgroup:/sys/fs/cgroup:ro --cap-add SYS_ADMIN --privileged --name ${USERNAME}-centos-vmparc${i} priximmo/centos7-systemctl-ssh:v1.1
+    docker run -tid --publish-all=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro --cap-add SYS_ADMIN --privileged --name ${USERNAME}-centos-vmparc${i} priximmo/centos7-systemctl-ssh:v1.1
 		echo "    => création de l'utilisateur ${USERNAME}"
 		docker exec -ti ${USERNAME}-centos-vmparc${i} /bin/bash -c "useradd -m -p sa3tHJ3/KuYvI ${USERNAME}"
 		echo "Installation de votre clé publique ${HOME}/.ssh/id_rsa.pub"
