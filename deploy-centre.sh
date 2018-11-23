@@ -40,7 +40,7 @@ if [ "$1" == "--proxy" ];then
         else 
                 mkdir /etc/systemd/system/docker.service.d/
                 echo "[Service]" | sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf
-                echo "Environment=\"HTTP_PROXY=http://pcs.ritac.i2:3128\"" | sudo tee --append /etc/systemd/system/docker.service.d/http-proxy.conf
+                echo "Environment=\"HTTP_PROXY=http://xxx.xxx.xx:3128\"" | sudo tee --append /etc/systemd/system/docker.service.d/http-proxy.conf
                 sudo service docker restart
         fi 
 
